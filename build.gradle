@@ -1,0 +1,63 @@
+buildscript {
+    ext {
+        springBootVersion = '2.1.2.RELEASE'
+        verifierVersion = '2.1.0.RELEASE'
+    }
+    repositories {
+        mavenCentral()
+    }
+    dependencies {
+        classpath("org.springframework.boot:spring-boot-gradle-plugin:${springBootVersion}")
+        classpath "org.springframework.cloud:spring-cloud-contract-gradle-plugin:${verifierVersion}"
+    }
+}
+
+apply plugin: 'java'
+apply plugin: 'org.springframework.boot'
+apply plugin: 'io.spring.dependency-management'
+apply plugin: 'groovy'
+apply plugin: 'spring-cloud-contract'
+
+group = 'com.example'
+version = '0.0.1-SNAPSHOT'
+sourceCompatibility = '11'
+
+repositories {
+    mavenCentral()
+    maven { url 'https://repo.spring.io/milestone' }
+}
+
+dependencies {
+    implementation 'org.springframework.boot:spring-boot-starter-web'
+    implementation 'org.projectlombok:lombok'
+    testImplementation 'org.springframework.boot:spring-boot-starter-test'
+    testImplementation 'org.codehaus.groovy:groovy-all:2.4.6'
+    testImplementation 'org.springframework.cloud:spring-cloud-starter-contract-stub-runner'
+    testImplementation 'org.springframework.cloud:spring-cloud-starter-contract-verifier'
+    annotationProcessor 'org.projectlombok:lombok'
+}
+
+dependencyManagement {
+    imports {
+        mavenBom "org.springframework.cloud:spring-cloud-contract-dependencies:${verifierVersion}"
+    }
+}
+
+sourceSets {
+    test {
+        java {
+            srcDir 'src/test/java'
+            srcDir 'src/contractTest/java'
+        }
+        resources {
+            srcDir 'src/test/resources'
+            srcDir 'src/contractTest/resources'
+        }
+    }
+}
+
+contracts {
+    packageWithBaseClasses = 'com.example.contractdemo.contracts'
+    contractsDslDir = new File("${project.rootDir}/src/contractTest/resources/contracts/")
+}
+
