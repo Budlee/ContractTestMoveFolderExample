@@ -25,7 +25,7 @@ The outcome is the following:
 
 ### The Spring Cloud Contracts plugin setup
 
-The build.gradle for this project can be see in the sample project located here: https://my.github.com/.
+The build.gradle for this project can be see in the sample project located here: https://github.com/Budlee/ContractTestMoveFolderExample.
 This post will not go into the setup of Spring Cloud Contracts as others do this much better and we concentrate on how to split the contracts code into their own folder.
 
 The first part is to create the new contract test folder which in this case was called `contractTest` and to follow the same structure that is typically used a sub folder `java` and `resources` was also added.
